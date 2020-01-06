@@ -1,0 +1,39 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body aline="center">
+    <label>Start Game</label>
+    <form class="form-horizontal" method="POST" action="/start_game">
+        <div class="form-group">
+            <label class="control-label col-sm-2">Enter Phone Number:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="p" placeholder="Enter phone Number" name="p">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-sm-2">Enter Your Game Id:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="gid" placeholder="Enter Game ID" name="gid">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default">Start a Game</button>
+            </div>
+        </div>
+    </form>
+
+</body>
+</html>
+
+{% endblock %}
