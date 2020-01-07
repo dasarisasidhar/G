@@ -27,6 +27,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="G\admin_views.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="G\db.py">
       <SubType>Code</SubType>
     </Compile>
@@ -35,7 +38,7 @@
     </Compile>
     <Compile Include="runserver.py" />
     <Compile Include="G\__init__.py" />
-    <Compile Include="G\views.py" />
+    <Compile Include="G\player_views.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="G\" />
@@ -48,7 +51,7 @@
   <ItemGroup>
     <Content Include="G\templates\create_game.html" />
     <Content Include="G\templates\display_game_code.html" />
-    <Content Include="G\templates\game_home.html" />
+    <Content Include="G\templates\player_home.html" />
     <Content Include="G\templates\player_details.html" />
     <Content Include="G\templates\play_game.html" />
     <Content Include="G\templates\start_game.html" />

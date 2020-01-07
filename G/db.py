@@ -11,8 +11,20 @@ class game:
 
     def save(details):
         try:
-            game_details.insert_one(details) #save user to db
+            game_details.insert_one(details) #save game to db
             return True  
         except Exception as e:
             print(e)
             return False
+
+    def is_game_active(game_code):
+        try:
+            game_details_by_code = game_details.find_one({code:str(game_code)})
+            if(game_details_by_code["code"] == code):
+                return True
+            return False
+        except Exception as e:
+            print(e)
+            return False
+       
+    def add_players(game_code):
