@@ -47,9 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="G\templates\create_game.html" />
-    <Content Include="G\templates\game_code.html" />
+    <Content Include="G\templates\display_game_code.html" />
     <Content Include="G\templates\game_home.html" />
     <Content Include="G\templates\player_details.html" />
+    <Content Include="G\templates\play_game.html" />
     <Content Include="G\templates\start_game.html" />
     <Content Include="requirements.txt" />
     <Content Include="G\static\content\bootstrap.css" />
@@ -76,7 +77,6 @@
     <Content Include="G\static\scripts\_references.js" />
     <Content Include="G\templates\about.html" />
     <Content Include="G\templates\contact.html" />
-    <Content Include="G\templates\index.html" />
     <Content Include="G\templates\layout.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />
