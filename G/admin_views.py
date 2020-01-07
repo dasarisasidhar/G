@@ -37,13 +37,13 @@ def start_game():
 @app.route('/start_game', methods = ["POST"])
 def start_game_post():
     game_details_to_start = dict(request.form)
-    if(db.start_game(game_details_to_start) == True):
-        return True
+    if(db.game.start_game(game_details_to_start) == True):
+        return redirect(url_for('players_dashboard'))
    
 @app.route("/players_dashboard")
 def players_dashboard():
-    code = code
-    players = db.get_players(game_code)
+    game_code = code
+    players = db.game.get_players(game_code)
     render_template(
             'active_player_details.html',
             title='game started! lets play',
