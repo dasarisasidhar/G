@@ -10,9 +10,7 @@ from G import db
 @app.route('/')
 @app.route('/game')
 def game():
-    return render_template(
-        'player_home.html',
-    )
+    return render_template('player_home.html')
 
 @app.route('/verify_gamecode', methods = ["POST"])
 def verify_gamecode():
@@ -21,15 +19,18 @@ def verify_gamecode():
         return render_template(
             'get_player_details.html',
             code = str(game_code["code"])
-        )
+                              )
     return "The Game Code You Entered is In-Active, Please Enter correct One"
 
 @app.route('/save_player',  methods = ["POST"])
 def save_player():
-    details = request.form
-    db.game.add_players(dict(details))
+    details = dict(request.form)
+    details["start_date"] = datetime.now()
+    db.game.add_players(details)
     player_name = details["name"]
-    return redirect(url_for('players_dashboard', code = details["code"], player_name = player_name))
+    return redirect(url_for('players_dashboard', 
+                            code = details["code"], 
+                            player_name = player_name))
 
 @app.route('/play_game/<code>/<player_name>/<qn>')
 def play_game(code, player_name, qn):
@@ -49,4 +50,6 @@ def play_game(code, player_name, qn):
                  player_name = player_name,
                  qn = qn
             )
-    return "Game Completed!!! \n Thanks for playing"
+    return redirect(url_for('leader_board', 
+                            code = code))
+                            

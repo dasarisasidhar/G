@@ -20,6 +20,7 @@ def create_game():
 @app.route('/create_game', methods = ["POST"])
 def create_game_post():
     quiz_details = dict()
+    quiz_details["start_date"] = datetime.now()
     details = dict(request.form)
     for i in range(1,6):
         quiz_details["q"+str(i)] = details["q"+str(i)]
@@ -30,6 +31,7 @@ def create_game_post():
                                                          
         quiz_details["ans"+str(i)] = details["ans"+str(i)]
     code = random.randint(0,9999999)
+    quiz_details["p"] = details["p"]
     quiz_details["code"] = str(code)
     quiz_details["start"] = False
     db.game.save(quiz_details)
@@ -50,7 +52,7 @@ def start_game():
 def start_game_post():
     game_details_to_start = dict(request.form)
     if(db.game.start_game(game_details_to_start) == True):
-        return redirect(url_for('players_dashboard', code = game_details_to_start["code"]))
+        return "Game Started Lets Play"
     else:
         return "Please provide valid details"
 
@@ -66,6 +68,7 @@ def players_dashboard(code, player_name):
 
 @app.route('/validate', methods = ["POST"])
 def validate():
+    ans = ""
     quiz_details = dict(request.form)
     qn = int(quiz_details["qn"])
     time_to_solve = ""
@@ -73,11 +76,9 @@ def validate():
     if(db.game.check_ans(code, qn, quiz_details["o"]) == True):
          question_date_time = datetime.fromisoformat(quiz_details["date_time"])
          time_to_solve = datetime.now()-question_date_time
-         time_to_save = str(time_to_solve.seconds)+":"+str(time_to_solve.microseconds)
-         time_to_save = datetime_object = datetime.strptime(time_to_save, '%S:%f')
-         ans = db.game.save_player_results(code, qn, time_to_save, quiz_details["player_name"])
+         ans = db.game.save_player_results(code, qn, time_to_solve, quiz_details["player_name"], is_correct = True)
     else:
-        ans = False
+        ans = db.game.save_player_results(code, qn, time_to_solve, quiz_details["player_name"], is_correct = False)
     return render_template(
         'results.html',
          ans = ans,
@@ -86,6 +87,16 @@ def validate():
          code = code,
          qn = qn+1
     )
+
+@app.route('/leader_board/<code>')
+def leader_board(code):
+    players = db.game.get_winners(code)
+    return render_template(
+        'leading_board.html',
+         code = code,
+         players = players
+    )
+
 
 @app.route('/contact')
 def contact():
