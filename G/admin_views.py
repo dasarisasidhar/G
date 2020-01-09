@@ -19,7 +19,16 @@ def create_game():
 
 @app.route('/create_game', methods = ["POST"])
 def create_game_post():
-    quiz_details = dict(request.form)
+    quiz_details = dict()
+    details = dict(request.form)
+    for i in range(1,6):
+        quiz_details["q"+str(i)] = details["q"+str(i)]
+        quiz_details["o"+str(i)] = [details["o"+str(i)+"1"], 
+                                                         details["o"+str(i)+"2"],
+                                                         details["o"+str(i)+"3"],
+                                                         details["o"+str(i)+"4"]]
+                                                         
+        quiz_details["ans"+str(i)] = details["ans"+str(i)]
     code = random.randint(0,9999999)
     quiz_details["code"] = str(code)
     quiz_details["start"] = False
@@ -45,14 +54,38 @@ def start_game_post():
     else:
         return "Please provide valid details"
 
-@app.route('/players_dashboard/<code>')
-def players_dashboard(code):
+@app.route('/players_dashboard/<code>/<player_name>')
+def players_dashboard(code, player_name):
     players = db.game.display_players(code)
     return render_template(
             'display_players_joined.html',
             players = players,
-            code = code
+            code = code,
+            player_name = player_name
         )
+
+@app.route('/validate', methods = ["POST"])
+def validate():
+    quiz_details = dict(request.form)
+    qn = int(quiz_details["qn"])
+    time_to_solve = ""
+    code = quiz_details["code"]
+    if(db.game.check_ans(code, qn, quiz_details["o"]) == True):
+         question_date_time = datetime.fromisoformat(quiz_details["date_time"])
+         time_to_solve = datetime.now()-question_date_time
+         time_to_save = str(time_to_solve.seconds)+":"+str(time_to_solve.microseconds)
+         time_to_save = datetime_object = datetime.strptime(time_to_save, '%S:%f')
+         ans = db.game.save_player_results(code, qn, time_to_save, quiz_details["player_name"])
+    else:
+        ans = False
+    return render_template(
+        'results.html',
+         ans = ans,
+         time_to_solve = time_to_solve,
+         player_name = quiz_details["player_name"],
+         code = code,
+         qn = qn+1
+    )
 
 @app.route('/contact')
 def contact():
@@ -72,15 +105,4 @@ def about():
         title='About',
         year=datetime.now().year,
         message='Your application description page.'
-    )
-
-@app.route('/validate', methods = ["POST"])
-def validate():
-    quiz_details = dict(request.form)
-    if(db.game.check_ans(quiz_details["code"], quiz_details["q"], quiz_details["o"]) == "True"):
-        ans = True
-    ans = False
-    return render_template(
-        'results.html',
-         ans = ans 
     )

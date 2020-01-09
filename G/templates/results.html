@@ -53,14 +53,16 @@
             {% endif%}
             <div>
                 {% if ans == True %}
-                <p> <strong>congratulation!! Corret Answer</strong> :</p>
+                <h1><strong>congratulation {{player_name}}!! Corret Answer</strong> :</h1>
                 <br />
-                {%else%}
-                <p> <strong>Wrong Answer, Better Luck Next Time</strong> :</p>
-                <br />
-                {% endif %}
+                <h3> Time Take to solve is {{time_to_solve}}</h3>
+                    <br />
+                    {%else%}
+                    <p> <strong>Wrong Answer, Better Luck Next Time</strong> :</p>
+                    <br />
+                    {% endif %}
             </div>
-            <a href="#" class="next round">&#8250;</a>
+            <a href="{{ url_for('play_game', code = code, player_name = player_name, qn = qn) }}" class="next round">&#8250; next question</a>
         </div>
     </div>
 </body>

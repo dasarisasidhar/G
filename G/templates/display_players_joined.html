@@ -47,6 +47,7 @@
 
 <body onload="setbackground();">
     <div class="CommentBox">
+        <h1> Welcome {{player_name}}</h1>
         {% if players %}
         <h4> Players Joined </h4>
         {% for i in players %}
@@ -60,15 +61,16 @@
 
     </div>
     <div>
+        {% if players == admin %}
         <footer>
             <a href="{{ url_for('start_game') }}">Click Here To Start Game</a>
         </footer>
+        {% else %}
         <footer>
-            <a href="{{ url_for('play_game', code = code) }}">Click Here To Play Game</a>
-            <br/>
-            <h6> note(To Start): only admin with phone number can start the game </h6>
-            <h6> note(To Play): only after admin started the game player can play </h6>
+            <a href="{{ url_for('play_game', code = code, player_name = player_name, qn = 1) }}">Click Here To Play Game</a>
+            <br />
         </footer>
+        {% endif %}
     </div>
 </body>
 </html>

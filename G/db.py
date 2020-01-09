@@ -68,26 +68,42 @@ class game:
             print(e)
             return False
         
-    def display_questions_and_options(code):
+    def display_questions_and_options(code, qn):
         try:
             game_details_by_code = game_details.find_one({"code":str(code)})
             if(game_details_by_code["start"] == True):
-                q = game_details_by_code["q1"]
-                o = tuple()
-                o = (game_details_by_code["o1"], game_details_by_code["o2"],
-                         game_details_by_code["o3"], game_details_by_code["o4"])
+                q = game_details_by_code["q"+str(qn)]
+                o = tuple(game_details_by_code["o"+str(qn)])
+                #o = (game_details_by_code["o"+str(qn)+"1"], game_details_by_code["o"+str(qn)+"2"],
+                #         game_details_by_code["o"+str(qn)+"3"], game_details_by_code["o"+str(qn)+"4"])
                 return (q, o)
             return False
         except Exception as e:
             print(e)
             return False
 
-    def check_ans(code, q, o):
+    def check_ans(code, qn, o):
         try:
             data = game_details.find_one({"code":str(code)})
             if(data["start"] == True):
-                if(o == data["ans"]):
+                if(o == data["ans"+(str(qn))]):
                     return True
+            return False
+        except Exception as e:
+            print(e)
+            return False
+
+    def save_player_results(code, qn, time_to_solve, player_name):
+        try:
+            details = dict()
+            game_details_by_code = game_details.find_one({"code":str(code)})
+            if(game_details_by_code["start"] == True):
+                details["code"] = code
+                details["qn"] = qn
+                details["time_to_solve"] = time_to_solve
+                details["player_name"] = player_name
+                player_details.insert_one(details)
+                return True
             return False
         except Exception as e:
             print(e)

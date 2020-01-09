@@ -28,19 +28,25 @@ def verify_gamecode():
 def save_player():
     details = request.form
     db.game.add_players(dict(details))
-    return redirect(url_for('players_dashboard', code = details["code"]))
+    player_name = details["name"]
+    return redirect(url_for('players_dashboard', code = details["code"], player_name = player_name))
 
-@app.route('/play_game/<code>')
-def play_game(code):
-    data = db.game.display_questions_and_options(code)
-    if(data == False):
+@app.route('/play_game/<code>/<player_name>/<qn>')
+def play_game(code, player_name, qn):
+    data = db.game.display_questions_and_options(code, qn)
+    if(int(qn)<6):
+        if(data == False):
+            return render_template(
+                'play_game.html',
+                 error = "Ask Your admin to start the game or error in db"
+            )
         return render_template(
-            'play_game.html',
-             error = "Ask Your admin to start the game"
-        )
-    return render_template(
-            'play_game.html',
-             q = data[0],
-             o = data[1],
-             code = code
-        )
+                'play_game.html',
+                 q = data[0],
+                 o = data[1],
+                 code = code,
+                 date_time = datetime.now(),
+                 player_name = player_name,
+                 qn = qn
+            )
+    return "Game Completed!!! \n Thanks for playing"
