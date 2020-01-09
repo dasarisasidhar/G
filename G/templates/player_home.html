@@ -45,17 +45,22 @@
 
 <body onload="setbackground();">
     <div>
-        <form class="form-horizontal" method="POST" action="/game">
-            <div class="CommentBox">
-                <div class="form-group">
-                    <h1> Game Name </h1>
-                    <input type="text" class="form-control" placeholder="Enter Your Game Code" id="code">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-default">Submit</button>
+        <div class="CommentBox">
+            <h1> Game Name </h1>
+            <form class="form-horizontal" method="POST" action="/verify_gamecode">
+                    <div class="form-group">
+                        <div >
+                            <input type="text" class="form-control" id="p" placeholder="Enter Your Game Code" name="code">
+                        </div>
                     </div>
-                </div>
-            </div>
-        </form>
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Start Game</button>
+                        </div>
+                    </div>
+                </form>
+        </div>
     </div>
     <footer>
         <a href="{{ url_for('create_game') }}">Create You New Game Here</a>

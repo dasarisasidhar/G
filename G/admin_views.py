@@ -1,9 +1,12 @@
 from datetime import datetime
 from flask import render_template
 from flask import request
+from flask import redirect
+from flask import url_for
 from G import app
 from G import validate
 from G import db
+import random
 
 @app.route('/create_game')
 def create_game():
@@ -17,7 +20,7 @@ def create_game():
 @app.route('/create_game', methods = ["POST"])
 def create_game_post():
     quiz_details = dict(request.form)
-    code = validate.create_gamecode()
+    code = random.randint(0,9999999)
     quiz_details["code"] = str(code)
     quiz_details["start"] = False
     db.game.save(quiz_details)
@@ -38,20 +41,19 @@ def start_game():
 def start_game_post():
     game_details_to_start = dict(request.form)
     if(db.game.start_game(game_details_to_start) == True):
-        return redirect(url_for('players_dashboard'))
-   
-@app.route("/players_dashboard")
-def players_dashboard():
-    game_code = code
-    players = db.game.get_players(game_code)
-    render_template(
-            'active_player_details.html',
-            title='game started! lets play',
-            year=datetime.now().year,
-            players = players
+        return redirect(url_for('players_dashboard', code = game_details_to_start["code"]))
+    else:
+        return "Please provide valid details"
+
+@app.route('/players_dashboard/<code>')
+def players_dashboard(code):
+    players = db.game.display_players(code)
+    return render_template(
+            'display_players_joined.html',
+            players = players,
+            code = code
         )
 
-  
 @app.route('/contact')
 def contact():
     """Renders the contact page."""
@@ -70,4 +72,15 @@ def about():
         title='About',
         year=datetime.now().year,
         message='Your application description page.'
+    )
+
+@app.route('/validate', methods = ["POST"])
+def validate():
+    quiz_details = dict(request.form)
+    if(db.game.check_ans(quiz_details["code"], quiz_details["q"], quiz_details["o"]) == "True"):
+        ans = True
+    ans = False
+    return render_template(
+        'results.html',
+         ans = ans 
     )

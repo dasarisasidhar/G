@@ -46,15 +46,29 @@
 </head>
 
 <body onload="setbackground();">
+    <div class="CommentBox">
+        {% if players %}
+        <h4> Players Joined </h4>
+        {% for i in players %}
+        {{i}}
+        <br />
+        {% endfor %}
+        <br />
+        {% else %}
+        <h4>Wait!!! People are joining</h4>
+        {% endif %}
+
+    </div>
     <div>
-        <div class="CommentBox">
-            <h1> Game Name </h1>
-            Your game code is {{code}}
-        </div>
-        </div>
         <footer>
-            <a href="{{ url_for('players_dashboard', code = code) }}">click to see players joined with code: {{code}}</a>
-            <br />
+            <a href="{{ url_for('start_game') }}">Click Here To Start Game</a>
         </footer>
+        <footer>
+            <a href="{{ url_for('play_game', code = code) }}">Click Here To Play Game</a>
+            <br/>
+            <h6> note(To Start): only admin with phone number can start the game </h6>
+            <h6> note(To Play): only after admin started the game player can play </h6>
+        </footer>
+    </div>
 </body>
 </html>

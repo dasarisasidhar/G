@@ -46,15 +46,22 @@
 </head>
 
 <body onload="setbackground();">
-    <div>
-        <div class="CommentBox">
-            <h1> Game Name </h1>
-            Your game code is {{code}}
+    <div class="CommentBox">
+        <div>
+            {% if error %}
+            <h1> {{error}} </h1>
+            {% endif%}
+            <div>
+                {% if ans == True %}
+                <p> <strong>congratulation!! Corret Answer</strong> :</p>
+                <br />
+                {%else%}
+                <p> <strong>Wrong Answer, Better Luck Next Time</strong> :</p>
+                <br />
+                {% endif %}
+            </div>
+            <a href="#" class="next round">&#8250;</a>
         </div>
-        </div>
-        <footer>
-            <a href="{{ url_for('players_dashboard', code = code) }}">click to see players joined with code: {{code}}</a>
-            <br />
-        </footer>
+    </div>
 </body>
 </html>

@@ -51,9 +51,12 @@
   <ItemGroup>
     <Content Include="G\templates\create_game.html" />
     <Content Include="G\templates\display_game_code.html" />
+    <Content Include="G\templates\display_players_joined.html" />
+    <Content Include="G\templates\leading_board.html" />
     <Content Include="G\templates\player_home.html" />
-    <Content Include="G\templates\player_details.html" />
+    <Content Include="G\templates\get_player_details.html" />
     <Content Include="G\templates\play_game.html" />
+    <Content Include="G\templates\results.html" />
     <Content Include="G\templates\start_game.html" />
     <Content Include="requirements.txt" />
     <Content Include="G\static\content\bootstrap.css" />
