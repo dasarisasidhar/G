@@ -1,7 +1,8 @@
 from pymongo import MongoClient
 from datetime import datetime
-client = MongoClient()
-client = MongoClient('localhost', 27017) #mongo_db uses local host to store data
+# test connection string usin cosmos db
+client = MongoClient('mongodb://mongodb4plaython:FQwahfriqW1YtqGHhmRQVzoCuqVruC3vFRoa0ppDHB2J7lR266sQXhzptFDlmmiitwBMXnX80OBfPSTWrEOnfg==@mongodb4plaython.documents.azure.com:10255/?ssl=true&replicaSet=globaldb')
+#client = MongoClient('localhost', 27017) #mongo_db uses local host to store data
 db = client['game']
 game_details = db['game_details']
 players = db['players']
