@@ -25,7 +25,7 @@ def verify_gamecode():
                               )
     return "The Game Code You Entered is In-Active, Please Enter correct One"
 
-@app.route('/save_player',  methods = ["POST"])
+@app.route('/save_player', methods = ["POST"])
 def save_player():
     details = dict(request.form)
     details["start_date"] = datetime.now()

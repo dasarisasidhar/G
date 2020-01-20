@@ -28,7 +28,7 @@ def create_game_post():
                                                          details["o"+str(i)+"2"],
                                                          details["o"+str(i)+"3"],
                                                          details["o"+str(i)+"4"]]
-                                                         
+        quiz_details["locked"]  = True                                                 
         quiz_details["ans"+str(i)] = details["ans"+str(i)]
     code = random.randint(0,9999999)
     quiz_details["p"] = details["p"]

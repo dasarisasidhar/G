@@ -59,6 +59,7 @@
     <Content Include="G\templates\play_game.html" />
     <Content Include="G\templates\results.html" />
     <Content Include="G\templates\start_game.html" />
+    <None Include="myplaython - Web Deploy.pubxml" />
     <Content Include="requirements.txt" />
     <Content Include="G\static\content\bootstrap.css" />
     <Content Include="G\static\content\bootstrap.min.css" />
