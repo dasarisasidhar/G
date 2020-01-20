@@ -8,9 +8,6 @@ from G import validate
 from G import db
 
 @app.route('/')
-def welcome():
-    return ("Welcome Page")
-
 @app.route('/game')
 def game():
     return render_template('player_home.html')
