@@ -35,7 +35,7 @@ soupsieve==1.9.5
 typed-ast==1.4.0
 typing-extensions==3.7.4.1
 uritemplate==3.0.0
-urllib3==1.25.7
+urllib3==1.25.8
 webencodings==0.5.1
 Werkzeug==0.16.0
 wrapt==1.11.2
